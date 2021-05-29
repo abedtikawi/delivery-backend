@@ -12,7 +12,7 @@ const clientSchema = mongoose.Schema(
       },
     ],
 
-    isAvailable: true,
+    isAvailable: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

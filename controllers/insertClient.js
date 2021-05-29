@@ -5,15 +5,30 @@ const validateBody = require("../utils/validateBody");
  * @param fname
  * @param lname
  * @param email
- * @param password
+ * @param password min 6
+ * @param phoneNumber min 6 isNumeric
  */
 module.exports = async (req, res) => {
   console.log("[+] Checking request for empty fields in InsertClient");
   // Passing the request with utils.validateBody for validation errors
-  if (validateBody(req, res)) return;
+  if (validateBody(req, res)) {
+    console.log("[-] Request failed Validation");
+    return;
+  }
 
   try {
-    const { fname, lname, email } = req.body;
+    const { fname, lname, email, phoneNumber } = req.body;
+    // Checking if client already exists in db
+    console.log("[+] Checking if client already exists in DB");
+    let checkUser = await Clients.findOne({
+      $or: [{ email: email }, { phoneNumber: phoneNumber }],
+    });
+    if (checkUser) {
+      // Client Already Exists
+      console.log("[-] User Already Exists");
+      return res.status(401).json({ message: "User already exists" });
+    }
+
     console.log("[+] Generating salt and encrypting Password");
     // Generating Salt=10
     const salt = await bcrypt.genSalt(10);

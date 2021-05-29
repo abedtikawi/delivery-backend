@@ -5,6 +5,7 @@ const clientSchema = mongoose.Schema(
     lname: { type: String },
     email: { type: String, unique: true },
     password: { type: String },
+    phoneNumber: { type: Number },
     itemsID: [
       {
         type: mongoose.Schema.Types.ObjectId,

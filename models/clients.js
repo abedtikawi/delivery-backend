@@ -4,16 +4,28 @@ const clientSchema = mongoose.Schema(
     fname: {
       type: String,
     },
+
     lname: {
       type: String,
     },
+
     email: {
       type: String,
       unique: true,
     },
+
     password: {
       type: String,
     },
+
+    itemsID: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Items",
+      },
+    ],
+
+    isAvailable: true,
   },
   { timestamps: true }
 );

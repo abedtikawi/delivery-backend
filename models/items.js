@@ -7,8 +7,12 @@ const itemsSchema = mongoose.Schema(
     price: {
       type: String,
     },
+    quantity: { type: Number },
     clientID: { type: mongoose.Schema.Types.ObjectId, ref: "Clients" },
-    
+    destinationID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Destinations",
+    },
     isAvailable: { type: Boolean, default: true },
   },
   { timestamps: true }

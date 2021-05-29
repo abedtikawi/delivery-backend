@@ -1,11 +1,14 @@
 const express = require("express");
-require('dotenv').config()
+require("dotenv").config();
 const app = express();
 const connectDB = require("./database/db");
-const port = 5000;
+const cors = require("cors");
+const indexRouter = require("./routes/router");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`);
+app.use(cors());
+app.use('/api',indexRouter)
+app.listen(process.env.PORT, () => {
+  console.log(`App running on port ${process.env.PORT}.`);
 });

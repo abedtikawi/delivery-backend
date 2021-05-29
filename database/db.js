@@ -1,29 +1,25 @@
-const Pool = require("pg").Pool;
+/* eslint-disable no-unused-vars */
+const mongoose = require("mongoose");
 
-const pool = new Pool({
-  host: process.env.RDS_HOSTNAME,
-  database: process.env.RDS_DATABASE,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT,
-  max: 20,
-  connectionTimeoutMillis: 0,
-  idleTimeoutMillis: 0,
-});
-
-try {
-  console.log("[+] Trying to connect to AWS RDS ..");
-  pool.connect((err, res) => {
-    if (err) {
-      console.log("[-] Connection to AWS Failed");
-      return console.log(err);
+const connectDB = async () => {
+  try {
+    console.log("[+] Trying to connect to Database");
+    await mongoose.connect(process.env.mongoURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      autoIndex: true,
+      keepAlive: true,
+    });
+    console.log(`[+] Connected to Mongo DB`);
+  } catch (err) {
+    if (err.name === "MongoNetworkError" || err.code === "ECONNREFUSED") {
+      return console.log("no internet on server");
     }
-    console.log("[+] Successfully Connected to AWS");
-  });
-} catch (err) {
-  console.log("Connection Error", err);
-  console.dir(err, { depth: 4 });
-  process.exit(1);
-}
+    console.log("[-] Connection Error", err);
 
-module.exports = pool;
+    process.exit(1);
+  }
+};
+module.exports = connectDB;

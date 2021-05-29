@@ -2,11 +2,8 @@ const Clients = require("../models/clients");
 const bcrypt = require("bcrypt");
 const validateBody = require("../utils/validateBody");
 /** Body params
- * @param fname
- * @param lname
- * @param email
- * @param password min 6
- * @param phoneNumber min 6 isNumeric
+ * @param {fname,lname,email,password,phoneNumber} req
+ * @returns {mongoose client object}
  */
 module.exports = async (req, res) => {
   console.log("[+] Checking request for empty fields in InsertClient");

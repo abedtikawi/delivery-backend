@@ -13,6 +13,7 @@ const itemsSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Destinations",
     },
+    dispatched: { type: String, default: false },
     isAvailable: { type: Boolean, default: true },
   },
   { timestamps: true }

@@ -8,7 +8,7 @@ const validateBody = require("../utils/validateBody");
  * itemName,price,quantity,
  * clientID,fname,lname,
  * city,street,address,
- * phoneNumber,zipCode,description} req
+ * phoneNumber,zipCode,description} req.body
  * @returns {mongoose item object with nested destination}
  */
 module.exports = async (req, res) => {

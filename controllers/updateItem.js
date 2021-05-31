@@ -1,18 +1,19 @@
 const Items = require("../models/items");
 const mongoose = require("mongoose");
 /**
-     * @param {id} query
-     * @param {itemName,price,quantity} body
-     * @returns {Item updated Object}
-*/
+ * @param {id} req.query
+ * @param {itemName,price,quantity} req.body
+ * @returns {Item updated Object}
+ */
 module.exports = async (req, res) => {
   try {
-    
-    console.log(`[+] Checking Item with id = ${req.query.id} if valid`);
+    console.log(
+      `[+] Checking Item with id = ${req.query.id} if valid in UpdateItem`
+    );
     // Check if id is not empty or not a mongoose object
     if (!req.query.id || !mongoose.isValidObjectId(req.query.id)) {
       console.log(`[-] Item with id = ${req.query.id} is not valid`);
-      return res.status(400).json({ message: "ID not valid" });
+      return res.status(400).json({ msg: "ID not valid" });
     }
     // Grab all keys from req.body to dynamically update
     const entries = Object.keys(req.body);
@@ -32,11 +33,13 @@ module.exports = async (req, res) => {
       { _id: req.query.id },
       { $set: updates }
     );
+
     console.log(`[+] Update item Successfully`);
 
-    return res.status(200).json({ message: "Success", api: updateItem });
+    return res.status(200).json({ msg: "Success", api: updateItem });
   } catch (error) {
+    console.log(`[-] error occured in UpdateItem`);
     console.log(error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ msg: "Internal Server Error" });
   }
 };

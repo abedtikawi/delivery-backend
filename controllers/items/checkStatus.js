@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 /**
  *
  * @param {clientId,status} req.body
- * @returns {Array}
+ * @returns {(Promise|number)}
  */
 module.exports = async (req, res) => {
   try {

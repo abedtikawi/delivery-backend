@@ -10,7 +10,7 @@ const validateBody = require("../../utils/validateBody");
  * clientId,fname,lname,
  * city,street,address,
  * phoneNumber,zipCode,description} req.body
- * @returns {object}
+ * @returns {Promise}
  */
 module.exports = async (req, res) => {
   console.log("[+] Checking request for empty fields in InsertItem");

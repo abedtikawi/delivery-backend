@@ -6,7 +6,8 @@ router.route('/item/insert').post(require('../middleware/validateItem'),require(
 router.route('/item/update').put(require('../controllers/updateItem'));
 router.route('/item/findByID').get(require('../controllers/findItemById'));
 router.route('/item/delete').delete(require('../controllers/deleteItem'))
-router.route('/destination/update').put(require('../controllers/updateDestination'));
-router.route('/getItems').get(require('../controllers/getItems'));
-router.route('/checkStatus').get(require('../controllers/checkStatus'))
+router.route('/item/dispatch').put(require('../controllers/itemDispatch'))
+router.route('/item/destination/update').put(require('../controllers/updateDestination'));
+router.route('/item/find').get(require('../controllers/getItems'));
+router.route('/item/checkStatus').get(require('../controllers/checkStatus'))
 module.exports = router;

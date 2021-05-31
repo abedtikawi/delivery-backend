@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const destinationSchema = mongoose.Schema(
   {
     fname: { type: String },
@@ -12,4 +13,5 @@ const destinationSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
 module.exports = mongoose.model("Destinations", destinationSchema);

@@ -9,8 +9,7 @@ const connectDB = async () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
-      autoIndex: true,
-      keepAlive: true,
+
     });
     console.log(`[+] Connected to Mongo DB`);
   } catch (err) {

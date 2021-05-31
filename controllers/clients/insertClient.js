@@ -1,9 +1,9 @@
-const Clients = require("../models/clients");
+const Clients = require("../../models/clients");
 const bcrypt = require("bcrypt");
-const validateBody = require("../utils/validateBody");
+const validateBody = require("../../utils/validateBody");
 /** Body params
- * @param {fname,lname,email,password,phoneNumber} req
- * @returns {mongoose client object}
+ * @param {fname,lname,email,password,phoneNumber} req.body
+ * @returns {Object}
  */
 module.exports = async (req, res) => {
   console.log("[+] Checking request for empty fields in InsertClient");
@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     const { fname, lname, email, phoneNumber } = req.body;
     // Checking if client already exists in db
     console.log("[+] Checking if client already exists in DB");
-    let checkUser = await Clients.findOne({
+    const checkUser = await Clients.findOne({
       $or: [{ email: email }, { phoneNumber: phoneNumber }],
     });
     if (checkUser) {
@@ -30,10 +30,10 @@ module.exports = async (req, res) => {
     // Generating Salt=10
     const salt = await bcrypt.genSalt(10);
     // Encrypting password
-    let encryptedPassword = await bcrypt.hash(req.body.password, salt);
+    const encryptedPassword = await bcrypt.hash(req.body.password, salt);
     console.log("[+] Creating Client ...");
     // Creating a client object and inserting into Database
-    let client = await Clients.create({
+    const client = await Clients.create({
       fname,
       lname,
       email,

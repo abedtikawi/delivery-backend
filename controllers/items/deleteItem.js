@@ -1,21 +1,26 @@
-const Items = require("../models/items");
+const Items = require("../../models/items");
 const mongoose = require("mongoose");
+/**
+ *
+ * @param {id} req.params
+ * @returns {String}
+ */
 module.exports = async (req, res) => {
   try {
     console.log(
-      `[+] Checking itemID with id = ${req.query.id} if valid in deleteItem`
+      `[+] Checking itemId with id = ${req.params.id} if valid in deleteItem`
     );
     // Check if id is not empty or not a mongoose object
-    if (!req.query.id || !mongoose.isValidObjectId(req.query.id)) {
-      console.log(`[-] itemID with id = ${req.query.id} is not valid`);
-      return res.status(400).json({ msg: "itemID not valid" });
+    if (!req.params.id || !mongoose.isValidObjectId(req.params.id)) {
+      console.log(`[-] itemId with id = ${req.params.id} is not valid`);
+      return res.status(400).json({ msg: "itemId not valid" });
     }
 
-    const itemID = req.query.id;
-    console.log(`[+] Querying Database to remove Item ${itemID}`);
+    const itemId = req.params.id;
+    console.log(`[+] Querying Database to remove Item ${itemId}`);
     //Query database, find item that has the sameID and set isAvailable to false
-    let deleteItem = await Items.findByIdAndUpdate(
-      { _id: itemID },
+    const deleteItem = await Items.findByIdAndUpdate(
+      { _id: itemId },
       { $set: { isAvailable: "false" } }
     );
     console.log("[+] Successfully deleted Item");

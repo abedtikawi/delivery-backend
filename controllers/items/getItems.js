@@ -1,8 +1,8 @@
-const Items = require("../models/items");
+const Items = require("../../models/items");
 /**
  *
  * @param {page,limit} req.query
- * @returns {array of items,number of items}
+ * @returns {Array}
  */
 module.exports = async (req, res) => {
   try {
@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     console.log(`[+] Requesting page=${page} with limit=${limit} in getItems.js`);
     // Query DB for all items with page number and limit
     // Populate the items with the destinationID
-    let getItems = await Items.find({ isAvailable: "true" })
+    const getItems = await Items.find({ isAvailable: "true" })
       .limit(limit)
       .skip(limit * page)
       .populate("destinationID", "-__v -updatedAt -createdAt")

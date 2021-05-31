@@ -1,18 +1,18 @@
-const Destinations = require("../models/destinations");
+const Destinations = require("../../models/destinations");
 const mongoose = require("mongoose");
 /**
- *
- * @param {fname,lname,city,street,phoneNumber,zipCode,description} req
- * @returns {mongoose destination Object}
+ * @param {id} req.params
+ * @param {fname,lname,city,street,phoneNumber,zipCode,description} req.body
+ * @returns {Object}
  */
 module.exports = async (req, res) => {
   try {
     console.log(
-      `[+] Checking Destination with id = ${req.query.id} if valid in updateDestination`
+      `[+] Checking Destination with id = ${req.params.id} if valid in updateDestination`
     );
     // Check if id is not empty or not a mongoose object
-    if (!req.query.id || !mongoose.isValidObjectId(req.query.id)) {
-      console.log(`[-] Destination with id = ${req.query.id} is not valid`);
+    if (!req.params.id || !mongoose.isValidObjectId(req.params.id)) {
+      console.log(`[-] Destination with id = ${req.params.id} is not valid`);
       return res.status(400).json({ msg: "Destination not valid" });
     }
     // Grab all keys from req.body to dynamically update
@@ -29,8 +29,8 @@ module.exports = async (req, res) => {
     }
     console.log(`[+] Starting update query`);
     // Update the Destination with the assigned values and keys
-    let updateDestination = await Destinations.findByIdAndUpdate(
-      { _id: req.query.id },
+    const updateDestination = await Destinations.findByIdAndUpdate(
+      { _id: req.params.id },
       { $set: updates }
     );
 

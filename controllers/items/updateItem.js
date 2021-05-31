@@ -1,19 +1,19 @@
-const Items = require("../models/items");
+const Items = require("../../models/items");
 const mongoose = require("mongoose");
 /**
- * @param {id} req.query
+ * @param {id} req.params
  * @param {itemName,price,quantity} req.body
- * @returns {Item updated Object}
+ * @returns {Object}
  */
 module.exports = async (req, res) => {
   try {
   
     console.log(
-      `[+] Checking Item with id = ${req.query.id} if valid in UpdateItem`
+      `[+] Checking Item with id = ${req.params.id} if valid in UpdateItem`
       );
       // Check if id is not empty or not a mongoose object
-      if (!req.query.id || !mongoose.isValidObjectId(req.query.id)) {
-        console.log(`[-] Item with id = ${req.query.id} is not valid`);
+      if (!req.params.id || !mongoose.isValidObjectId(req.params.id)) {
+        console.log(`[-] Item with id = ${req.params.id} is not valid`);
         return res.status(400).json({ msg: "ID not valid" });
       }
       // Grab all keys from req.body to dynamically update
@@ -30,8 +30,8 @@ module.exports = async (req, res) => {
       }
       console.log(`[+] Starting update query`);
       // Update the item with the assigned values and keys
-      let updateItem = await Items.findByIdAndUpdate(
-        { _id: req.query.id },
+      const updateItem = await Items.findByIdAndUpdate(
+        { _id: req.params.id },
         { $set: updates }
         );
         

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const clientSchema = mongoose.Schema(
   {
     fname: { type: String },
@@ -6,7 +7,7 @@ const clientSchema = mongoose.Schema(
     email: { type: String, unique: true },
     password: { type: String },
     phoneNumber: { type: Number },
-    itemsID: [
+    itemsId: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Items",
@@ -17,4 +18,5 @@ const clientSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
 module.exports = mongoose.model("Clients", clientSchema);

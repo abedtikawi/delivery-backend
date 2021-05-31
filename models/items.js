@@ -1,21 +1,19 @@
 const mongoose = require("mongoose");
+
 const itemsSchema = mongoose.Schema(
   {
-    itemName: {
-      type: String,
-    },
-    price: {
-      type: String,
-    },
+    itemName: { type: String },
+    price: { type: String },
     quantity: { type: Number },
-    clientID: { type: mongoose.Schema.Types.ObjectId, ref: "Clients" },
-    destinationID: {
+    clientId: { type: mongoose.Schema.Types.ObjectId, ref: "Clients" },
+    destinationId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Destinations",
     },
-    dispatched: { type: String, default: "false" },
+    isDispatched: { type: Boolean, default: false },
     isAvailable: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
+
 module.exports = mongoose.model("Items", itemsSchema);

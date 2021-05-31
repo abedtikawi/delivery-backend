@@ -1,5 +1,5 @@
 const Item = require("../models/items");
-const mongoose=require('mongoose')
+const mongoose = require("mongoose");
 /**
  *
  * @param {id} req.query
@@ -17,7 +17,10 @@ module.exports = async (req, res) => {
     }
     // Query database for the item
     console.log(`[+] Searching DB for item with id ${req.query.id}`);
-    let findItem = await Item.findById(req.query.id);
+    // Populate Destination id 
+    let findItem = await Item.findById(req.query.id)
+      .populate("destinationID", "-__v -createdAt -updatedAt")
+      .select("-__v -createdAt -updatedAt");
     if (findItem) {
       // Item exists,return item in response
       console.log("[+] Successfully returned item");

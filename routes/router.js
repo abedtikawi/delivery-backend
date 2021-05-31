@@ -5,5 +5,5 @@ router.route('/insertClient').post(require('../middleware/validateClient'),requi
 router.route('/insertItem').post(require('../middleware/validateItem'),require("../controllers/insertItem"));
 router.route('/updateItem').put(require('../controllers/updateItem'))
 router.route('/findItem').get(require('../controllers/findItemById'))
-
+router.route('/getItems').get(require('../controllers/getItems'))
 module.exports = router;

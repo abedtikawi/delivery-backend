@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
 
     return res
       .status(200)
-      .json({ msg: "Success", api: { insertDestination, insertItem } });
+      .json({ msg: "Success", api: { destination:insertDestination, item:insertItem } });
   } catch (error) {
     console.log("[-] Error occured in InsertItem.js");
     console.log(error);

@@ -17,9 +17,11 @@ module.exports = async (req, res) => {
     }
     // Query database for the item
     console.log(`[+] Searching DB for item with id ${req.query.id}`);
-    // Populate Destination id 
-    let findItem = await Item.findById(req.query.id)
-      .populate("destinationID", "-__v -createdAt -updatedAt")
+    // Populate Destination id
+    let findItem = await Item.findById({ _id: req.query.id })
+      .where("isAvailable")
+      .equals(true)
+      .populate("destinationID", " -createdAt -updatedAt")
       .select("-__v -createdAt -updatedAt");
     if (findItem) {
       // Item exists,return item in response

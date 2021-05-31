@@ -19,39 +19,35 @@ module.exports = async (req, res) => {
     const status = req.body.status;
     // Validate status for boolean value
     console.log("[+] Validating status ");
-    if (
-      !status ||
-      !status == "false" ||
-      !status == "true" ||
-      !status.length > 0
-    ) {
-      // status is not a valid boolean value
-      console.log("[-] Status validation failed ");
-      return res.status(400).json({ message: "insert a valid status " });
-    }
 
-    // Query all items in db that matches clientID with req.body.clientID && dispatched matches req.body.status
-    console.log(
-      `[+] Searching for items in DB that match Dispatch = ${status}`
-    );
-    // populate the found items with the destinationID
-    let findItems = await Items.find({
-      clientID: req.body.clientID,
-      dispatched: status,
-    })
-      .populate("destinationID", "-__v")
-      .select("-__v");
-    if (findItems.length > 0) {
-      console.log("[+] Items found Successfully");
-      return res.status(200).json({
-        message: "Success",
-        api: { items: findItems, length: findItems.length },
-      });
+    if (req.body.status == "true" || req.body.status == "false") {
+      // Query all items in db that matches clientID with req.body.clientID && dispatched matches req.body.status
+      console.log(
+        `[+] Searching for items in DB that match Dispatch = ${status}`
+      );
+      // populate the found items with the destinationID
+      let findItems = await Items.find({
+        clientID: req.body.clientID,
+        dispatched: status,
+        isAvailable: true,
+      })
+        .populate("destinationID", "-__v")
+        .select("-__v");
+      if (findItems.length > 0) {
+        console.log("[+] Items found Successfully");
+        return res.status(200).json({
+          message: "Success",
+          api: { items: findItems, length: findItems.length },
+        });
+      }
     } else {
+      // status is not a valid boolean value
+      console.log(`[-] Status validation failed ,status = ${status}`);
+
       // No items found in db
       console.log("[+] No items found");
       return res.status(200).json({
-        message: "No items found in DB",
+        message: "insert a valid status ",
       });
     }
   } catch (error) {
